@@ -80,7 +80,7 @@ public class ReportQuotaUsage extends VoltProcedure {
     CVMInterface[] cvmOpportunities = { 
              new GamingOfferImpl()
             ,new LoyaltyOfferImpl(100)
-            ,new LoyaltyOfferRound2Impl(2)
+            //,new LoyaltyOfferRound2Impl(2) // will uncomment later in the Run Book
             };
 
     // @formatter:on
