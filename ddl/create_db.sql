@@ -59,7 +59,6 @@ PARTITION TABLE user_usage_table ON COLUMN userid;
 CREATE INDEX uut_ix1 ON user_usage_table(userid, lastdate);
 
 create table user_recent_transactions
- MIGRATE TO TARGET user_transactions
 (userid bigint not null 
 ,user_txn_id varchar(128) NOT NULL
 ,txn_time TIMESTAMP DEFAULT NOW  not null 
@@ -68,7 +67,7 @@ create table user_recent_transactions
 ,spent_amount bigint 
 ,purpose  varchar(128)
 ,primary key (userid, user_txn_id))
-USING TTL 1 HOURS ON COLUMN txn_time;
+USING TTL 180 MINUTES ON COLUMN txn_time;
 
 PARTITION TABLE user_recent_transactions ON COLUMN userid;
 
