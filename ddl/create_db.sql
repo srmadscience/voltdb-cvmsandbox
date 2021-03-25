@@ -73,9 +73,7 @@ PARTITION TABLE user_recent_transactions ON COLUMN userid;
 
 CREATE INDEX urt_idx1 ON user_recent_transactions(userid, txn_time) ;
 
-CREATE INDEX urt_del_idx2 ON user_recent_transactions(userid, txn_time)  WHERE NOT MIGRATING;
-
-CREATE INDEX urt_del_idx4 ON user_recent_transactions(txn_time) WHERE NOT MIGRATING;
+CREATE INDEX urt_del_idx4 ON user_recent_transactions(txn_time);
 
 CREATE INDEX urt_del_idx5 ON user_recent_transactions (TRUNCATE(MINUTE,txn_time));
 
