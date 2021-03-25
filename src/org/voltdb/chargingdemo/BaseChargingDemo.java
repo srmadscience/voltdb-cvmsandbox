@@ -117,6 +117,12 @@ public abstract class BaseChargingDemo {
                     msg(e.getMessage());
                 }
             }
+            
+
+            if (client.getConnectedHostList().size() == 0) {
+              throw new Exception("No hosts usable...");  
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();
