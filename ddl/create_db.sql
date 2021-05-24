@@ -14,11 +14,9 @@ CREATE table user_table
 
 PARTITION TABLE user_table ON COLUMN userid;
 
-
 create index ut_del on user_table(user_last_seen);
 
 create index ut_loyaltycard on user_table (field(user_json_object, 'loyaltySchemeNumber'));
-
 
 CREATE table user_cvm_offers
 (userid bigint not null
@@ -34,7 +32,6 @@ CREATE INDEX cvm_ix2 ON user_cvm_offers (offer_type
      , TRUNCATE(MINUTE,offer_date));
 
 PARTITION TABLE user_cvm_offers ON COLUMN userid;
-
 
 CREATE VIEW cvm_offer_activity AS
 SELECT offer_type
@@ -84,8 +81,9 @@ CREATE INDEX urt_del_idx6 ON user_recent_transactions (TRUNCATE(MINUTE,txn_time)
 CREATE INDEX urt_del_idx7 ON user_recent_transactions (TRUNCATE(MINUTE,txn_time)) WHERE spent_amount <= 0;
 
 CREATE STREAM user_financial_events 
-partition on column userid
-export to target user_financial_events
+EXPORT TO TOPIC user_financial_events 
+WITH KEY (userid)
+PARTITION on column userid
 (userid bigint not null 
 ,amount bigint not null
 ,user_txn_id varchar(128) not null
@@ -111,7 +109,6 @@ from user_usage_table
 group by  userid,  sessionid;
 
 create index uss_ix1 on users_sessions (how_many) WHERE how_many > 1;
-
 
 create view recent_activity_out as
 select TRUNCATE(MINUTE,txn_time) txn_time
