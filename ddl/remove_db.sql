@@ -52,8 +52,4 @@ DROP table user_recent_transactions IF EXISTS;
 DROP TABLE user_cvm_offers IF EXISTS;
 DROP STREAM user_financial_events IF EXISTS;
 
-
-
-
-
 END_OF_BATCH
