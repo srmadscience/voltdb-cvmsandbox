@@ -66,6 +66,8 @@ create table user_recent_transactions
 ,primary key (userid, user_txn_id))
 USING TTL 180 MINUTES ON COLUMN txn_time;
 
+alter table user_recent_transactions alter using ttl 300 seconds  ON COLUMN txn_time batch_size 1000 MAX_FREQUENCY 10;
+
 PARTITION TABLE user_recent_transactions ON COLUMN userid;
 
 CREATE INDEX urt_idx1 ON user_recent_transactions(userid, txn_time) ;
