@@ -74,6 +74,13 @@ public class ReportQuotaUsage extends VoltProcedure {
             + "(userid,offer_date,offer_type,offer_payload)"
             + "VALUES"
             + "(?,NOW,?,?)");
+ 
+    public static final SQLStmt deleteOldTxns = new SQLStmt("DELETE " 
+            + "FROM user_recent_transactions "
+            + "WHERE userid = ? "
+            + "AND txn_time < DATEADD(MILLISECOND,?,NOW)"
+            + "ORDER BY txn_time,userid,user_txn_id LIMIT 1;");
+
     
     Gson gson = new Gson();
 
@@ -122,6 +129,8 @@ public class ReportQuotaUsage extends VoltProcedure {
         voltQueueSQL(delOldUsage, userId, sessionId);
         voltQueueSQL(getUserBalance, sessionId, userId);
         voltQueueSQL(getCurrrentlyAllocated, userId);
+        voltQueueSQL(deleteOldTxns,userId,10);
+
 
         this.setAppStatusCode(ReferenceData.STATUS_OK);
 
