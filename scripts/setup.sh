@@ -13,7 +13,7 @@ sqlcmd --servers=vdb1 < create_db.sql
 cd
 cd voltdb-cvmsandbox/scripts
 
-java -jar $HOME/bin/addtodeploymentdotxml.jar vdb1 deployment topics.xml
+java ${JVMOPTS} -jar $HOME/bin/addtodeploymentdotxml.jar vdb1 deployment topics.xml
 
 $HOME/bin/reload_dashboards.sh voltdb-cvmsandbox.json
 
